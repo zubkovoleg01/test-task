@@ -1,0 +1,127 @@
+swagger: '2.0'
+info:
+  title: Cinemas API
+  description: The API was created for test task by Artem Lebedev.
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: 127.0.0.1:8888
+schemes:
+- http
+basePath: /api
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /cinemas/:
+    get:
+      operationId: cinemas_list
+      description: Получение всех кинотеатров
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cinemas'
+      tags:
+      - cinemas
+    parameters: []
+  /cinemas/{id}/:
+    get:
+      operationId: cinemas_read
+      description: Получение всех кинотеатров
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Cinemas'
+      tags:
+      - cinemas
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this cinemas.
+      required: true
+      type: integer
+  /search_cinema/:
+    get:
+      operationId: search_cinema_list
+      description: Получение кинотеатра/кинотеатров по имени
+      parameters:
+      - name: search
+        in: query
+        description: A search term.
+        required: false
+        type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cinemas'
+      tags:
+      - search_cinema
+    parameters: []
+  /search_cinema/{id}/:
+    get:
+      operationId: search_cinema_read
+      description: Получение кинотеатра/кинотеатров по имени
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Cinemas'
+      tags:
+      - search_cinema
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+definitions:
+  Cinemas:
+    required:
+    - name
+    - description
+    - address_street
+    - address_full
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 300
+        minLength: 1
+      address_street:
+        title: Address street
+        type: string
+        maxLength: 300
+        minLength: 1
+      address_full:
+        title: Address full
+        type: string
+        maxLength: 300
+        minLength: 1
